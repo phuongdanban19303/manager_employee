@@ -44,7 +44,6 @@ function* handleFetchHistory(action) {
     else if (type === "proposal")
       res = yield call(getProposalHistoryApi, empId);
 
-    // Giả sử API history cũng bọc trong .data
     yield put({
       type: `event/fetch${type.charAt(0).toUpperCase() + type.slice(1)}HistorySuccess`,
       payload: res.data || res,
@@ -63,7 +62,7 @@ function* handleCreateEvent(action) {
     else if (type === "promotion") res = yield call(createPromotionApi, data);
     else if (type === "proposal") res = yield call(createProposalApi, data);
 
-    if (res.code!== 200000) {
+    if (res.code !== 200000) {
       throw new Error(res.message || "Có lỗi xảy ra");
     }
 
@@ -104,7 +103,6 @@ function* handleUpdateEvent(action) {
 function* handleSubmitEvent(action) {
   try {
     const { type, formId, receiverId, empId } = action.payload;
-    // Gửi đúng SubmitFormRequest: { formId, receiverId }
     const submitBody = { formId, receiverId };
 
     if (type === "salary") yield call(submitSalaryIncreaseApi, submitBody);

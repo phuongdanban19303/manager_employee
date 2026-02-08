@@ -2,10 +2,9 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
   pendingList: [],
-  selectedForm: null, // Chi tiết đơn đăng ký
+  selectedForm: null, 
   selectedEmployeeDetail: null,
-  selectedFormType: null, // REGISTRATION, SALARY, PROMOTION, PROPOSAL
-  // Chi tiết full thông tin nhân viên (Gia đình, Văn bằng...)
+  selectedFormType: null, 
   loading: false,
   processing: false,
   error: null,

@@ -11,7 +11,6 @@ function App() {
   return (
     <BrowserRouter>
       <Routes>
-        {/* Trang Login luôn có thể truy cập nếu chưa có token, nếu có rồi thì redirect về home */}
         <Route
           path="/login"
           element={
@@ -19,16 +18,13 @@ function App() {
           }
         />
 
-        {/* Các Route cần bảo vệ */}
         <Route
           path="/*"
           element={
             token ? (
               <div className="flex h-screen bg-[#f0f2f5] overflow-hidden">
-                {/* Sidebar bên trái - Cố định */}
                 <Navbar />
 
-                {/* Vùng nội dung chính bên phải - Có thể cuộn */}
                 <div className="flex-1 overflow-y-auto custom-scrollbar">
                   <div className="min-h-full p-4 lg:p-8">
                     <Routes>

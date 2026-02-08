@@ -6,10 +6,9 @@ const initialState = {
   salaryHistory: [],
   promotionHistory: [],
   proposalHistory: [],
-  currentFormId: null, // ID của bản ghi vừa lưu xong để Trình
-  editingRecordId: null, // ID của bản ghi đang được chọn để Sửa
-  isSaved: false, // Trạng thái đã lưu thành công hay chưa
-  loading: false,
+  currentFormId: null, 
+  editingRecordId: null, 
+  isSaved: false, 
   submitting: false,
   error: null,
 };
@@ -39,7 +38,6 @@ const eventSlice = createSlice({
       state.isSaved = false; // Reset saved state khi bắt đầu sửa nội dung mới
     },
 
-    // Salary actions
     fetchSalaryHistoryRequest: (state) => {
       state.loading = true;
     },
@@ -48,7 +46,6 @@ const eventSlice = createSlice({
       state.salaryHistory = action.payload;
     },
 
-    // Promotion actions
     fetchPromotionHistoryRequest: (state) => {
       state.loading = true;
     },
@@ -57,7 +54,6 @@ const eventSlice = createSlice({
       state.promotionHistory = action.payload;
     },
 
-    // Proposal actions
     fetchProposalHistoryRequest: (state) => {
       state.loading = true;
     },
@@ -66,7 +62,6 @@ const eventSlice = createSlice({
       state.proposalHistory = action.payload;
     },
 
-    // Generic Create/Update/Submit
     createEventRequest: (state) => {
       state.submitting = true;
     },

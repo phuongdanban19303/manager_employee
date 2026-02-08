@@ -47,7 +47,6 @@ import {
   updateRegistrationFormApi,
 } from "../../api/EmpolyeeApi.js";
 
-// 1. Hàm fetch danh sách (giữ nguyên)
 function* handleFetchEmployees() {
   try {
     const res = yield call(getAllEmployeesApi);
@@ -57,13 +56,11 @@ function* handleFetchEmployees() {
   }
 }
 function* handleSaveFull(action) {
-
   try {
     const { family = [], certificates = [], ...empData } = action.payload;
 
     let employeeId = empData.id;
 
-    /* ==== 1. EMPLOYEE ==== */
     const employeePayload = {
       fullName: empData.fullName,
       gender: empData.gender === "Nam" ? "MALE" : "FEMALE",
@@ -75,7 +72,7 @@ function* handleSaveFull(action) {
       phone: empData.phone,
       email: empData.email,
     };
-    console.log("ID here",empData)
+    console.log("ID here", empData);
 
     if (employeeId) {
       yield call(updateEmployeeApi, employeeId, employeePayload);
@@ -86,7 +83,6 @@ function* handleSaveFull(action) {
 
     if (!employeeId) throw new Error("Không lấy được ID nhân viên");
 
-    /* ==== 2. FAMILY ==== */
     const familyCalls = [];
     const newFamilyPayload = [];
 
@@ -111,7 +107,6 @@ function* handleSaveFull(action) {
       familyCalls.push(call(createFamilyApi, employeeId, newFamilyPayload));
     }
 
-    /* ==== 3. CERTIFICATES ==== */
     const certCalls = [];
     const newCertPayload = [];
 
@@ -134,16 +129,14 @@ function* handleSaveFull(action) {
       certCalls.push(call(createCertsApi, employeeId, newCertPayload));
     }
 
-    /* ==== 4. RUN SONG SONG ==== */
     yield all([...familyCalls, ...certCalls]);
 
-    /* ==== 5. SYNC LẠI SERVER ==== */
     const [empDetail, familyDetail, certDetail] = yield all([
       call(getEmployeeDetailApi, employeeId),
       call(getFamilyByEmployeeApi, employeeId),
       call(getCertificatesByEmployeeApi, employeeId),
     ]);
-     console.log("decheck",empDetail)
+    console.log("decheck", empDetail);
     yield put(
       saveEmployeeFullSuccess({
         ...empDetail.data,
@@ -160,7 +153,6 @@ function* handleSaveFull(action) {
   }
 }
 
-// 3. Hàm xóa và đăng ký (giữ nguyên)
 function* handleDelete(action) {
   try {
     yield call(deleteEmployeeApi, action.payload);
@@ -169,7 +161,6 @@ function* handleDelete(action) {
     alert(error.message);
   }
 }
-// get list view deatil an edit
 function* handleFetchEmployeeDetail(action) {
   try {
     const employeeId = action.payload;
@@ -199,7 +190,6 @@ function* handleCheckRegistration(action) {
     const res = yield call(checkRegistrationApi, action.payload);
     yield put(checkRegistrationSuccess(res));
   } catch (error) {
-    // error here is likely the JSON object with the "message" field from server
     const errorMsg = error.message || "Chưa đủ điều kiện đăng ký";
     yield put(checkRegistrationFailure(errorMsg));
   }
@@ -220,26 +210,22 @@ function* handleCreateRegistration(action) {
     const { employeeId, data } = action.payload;
 
     const res = yield call(createRegistrationFormApi, employeeId, data);
-    // res = { code, message, timestamp, data? }
 
     if (res.code !== 200000) {
       throw new Error(res.message || "Permission denied");
     }
 
-    yield put(createRegistrationSuccess({
-      id: res.data?.form_id
-    }));
+    yield put(
+      createRegistrationSuccess({
+        id: res.data?.form_id,
+      }),
+    );
 
     alert("Đã lưu biểu mẫu đăng ký thành công!");
-
   } catch (error) {
-    alert(
-      "Lỗi tạo biểu mẫu: " +
-      (error?.message || "Không rõ nguyên nhân")
-    );
+    alert("Lỗi tạo biểu mẫu: " + (error?.message || "Không rõ nguyên nhân"));
   }
 }
-
 
 function* handleFetchManagers() {
   try {
@@ -251,18 +237,17 @@ function* handleFetchManagers() {
 }
 
 function* handleFetchExistingReg(action) {
-    try {
-        const res = yield call(getRegistrationByEmployeeApi, action.payload);
-        yield put(fetchExistingRegistrationSuccess(res.data || res));
-    } catch (e) {
-        yield put(fetchExistingRegistrationSuccess(null));
-    }
+  try {
+    const res = yield call(getRegistrationByEmployeeApi, action.payload);
+    yield put(fetchExistingRegistrationSuccess(res.data || res));
+  } catch (e) {
+    yield put(fetchExistingRegistrationSuccess(null));
+  }
 }
 
 function* handleUpdateReg(action) {
   try {
     const { formId, data } = action.payload;
-    // Gộp ID vào body đúng chuẩn API mới mày đưa: { id, resume, cvUrl, note, jobPosition }
     const updatePayload = {
       ...data,
       id: formId,
@@ -300,6 +285,5 @@ export default function* employeeSaga() {
     takeLeading(submitToManagerRequest.type, handleSubmitToManager),
     takeLeading(updateRegistrationRequest.type, handleUpdateReg),
     takeLeading(fetchExistingRegistrationRequest.type, handleFetchExistingReg),
-
   ]);
 }

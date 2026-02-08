@@ -1,27 +1,26 @@
-import { useState, useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { TEAMS } from "../../utils/contstants";
+import { useEffect, useState } from "react";
 import {
-  saveEmployeeFullRequest,
-  registerEmployeeRequest,
-  fetchEmployeeDetailRequest,
-} from "../../store/scile/employeeSlice";
-import {
-  FaUser,
-  FaIdCard,
-  FaUsers,
-  FaPlus,
-  FaTrash,
-  FaSave,
-  FaPaperPlane,
-  FaTimes,
-  FaSpinner,
-  FaInfoCircle,
+  FaCalendarAlt,
   FaCheckCircle,
+  FaIdCard,
+  FaInfoCircle,
   FaLink,
   FaMapMarkerAlt,
-  FaCalendarAlt,
+  FaPaperPlane,
+  FaPlus,
+  FaSave,
+  FaSpinner,
+  FaTimes,
+  FaTrash,
+  FaUser,
+  FaUsers,
 } from "react-icons/fa";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  fetchEmployeeDetailRequest,
+  saveEmployeeFullRequest,
+} from "../../store/scile/employeeSlice";
+import { TEAMS } from "../../utils/contstants";
 import RegistrationModal from "./RegistrationModal";
 const EmployeeModal = ({ employeeID, mode, onClose }) => {
   const isView = mode === "view";
@@ -47,18 +46,16 @@ const EmployeeModal = ({ employeeID, mode, onClose }) => {
 
   const [showRegProcess, setShowRegProcess] = useState(false);
 
-  /* LOAD DETAIL */
   useEffect(() => {
     if (employeeID && (mode === "edit" || mode === "view")) {
       dispatch(fetchEmployeeDetailRequest(employeeID));
     }
   }, [employeeID, mode, dispatch]);
 
-  /* SET DATA FROM REDUX */
   useEffect(() => {
-    console.log(mode)
-    if (!selectedDetail ) return;
-     
+    console.log(mode);
+    if (!selectedDetail) return;
+
     setFormData({
       ...selectedDetail,
 

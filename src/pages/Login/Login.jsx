@@ -1,12 +1,15 @@
-import React, { useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { Navigate } from 'react-router-dom';
-import { loginRequest } from '../../store/scile/authSlice';
+import React, { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { Navigate } from "react-router-dom";
+import { loginRequest } from "../../store/scile/authSlice";
 
 const Login = () => {
   const dispatch = useDispatch();
-  const { token, loading, error } = useSelector(state => state.auth);
-  const [credentials, setCredentials] = useState({ username: '', password: '' });
+  const { token, loading, error } = useSelector((state) => state.auth);
+  const [credentials, setCredentials] = useState({
+    username: "",
+    password: "",
+  });
 
   if (token) {
     return <Navigate to="/management/employees" replace />;
@@ -14,7 +17,7 @@ const Login = () => {
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setCredentials(prev => ({ ...prev, [name]: value }));
+    setCredentials((prev) => ({ ...prev, [name]: value }));
   };
 
   const handleSubmit = (e) => {
@@ -32,9 +35,13 @@ const Login = () => {
               <i className="fas fa-layer-group text-3xl"></i>
             </div>
           </div>
-          
-          <h2 className="text-2xl font-bold text-center text-slate-800 mb-2">Chào mừng trở lại</h2>
-          <p className="text-center text-slate-400 text-sm mb-8">Hệ thống Quản lý Nhân sự HR Master</p>
+
+          <h2 className="text-2xl font-bold text-center text-slate-800 mb-2">
+            Chào mừng trở lại
+          </h2>
+          <p className="text-center text-slate-400 text-sm mb-8">
+            Hệ thống Quản lý Nhân sự HR Master
+          </p>
 
           <form onSubmit={handleSubmit} className="space-y-6">
             {error && (
@@ -45,7 +52,9 @@ const Login = () => {
             )}
 
             <div className="space-y-1">
-              <label className="text-xs font-bold text-slate-500 uppercase tracking-wider">Tài khoản</label>
+              <label className="text-xs font-bold text-slate-500 uppercase tracking-wider">
+                Tài khoản
+              </label>
               <div className="relative">
                 <span className="absolute inset-y-0 left-0 pl-3 flex items-center text-gray-400">
                   <i className="fas fa-user text-sm"></i>
@@ -63,7 +72,9 @@ const Login = () => {
             </div>
 
             <div className="space-y-1">
-              <label className="text-xs font-bold text-slate-500 uppercase tracking-wider">Mật khẩu</label>
+              <label className="text-xs font-bold text-slate-500 uppercase tracking-wider">
+                Mật khẩu
+              </label>
               <div className="relative">
                 <span className="absolute inset-y-0 left-0 pl-3 flex items-center text-gray-400">
                   <i className="fas fa-lock text-sm"></i>
@@ -85,12 +96,16 @@ const Login = () => {
               disabled={loading}
               className="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-4 rounded-xl shadow-lg shadow-blue-100 transition-all active:scale-95 disabled:opacity-50 flex items-center justify-center gap-2"
             >
-              {loading ? <i className="fas fa-circle-notch fa-spin"></i> : <i className="fas fa-sign-in-alt"></i>}
-              {loading ? 'Đang xác thực...' : 'Đăng nhập'}
+              {loading ? (
+                <i className="fas fa-circle-notch fa-spin"></i>
+              ) : (
+                <i className="fas fa-sign-in-alt"></i>
+              )}
+              {loading ? "Đang xác thực..." : "Đăng nhập"}
             </button>
           </form>
         </div>
-        
+
         <div className="bg-gray-50 px-8 py-4 border-t border-gray-100 text-center">
           <p className="text-xs text-gray-400">
             &copy; 2024 HR Master System. Power by Senior Dev.

@@ -13,7 +13,7 @@ const initialState = {
     loading: false,
   },
   registration: {
-    currentFormData:null,
+    currentFormData: null,
     currentFormId: null,
     managers: [],
     loading: false,
@@ -25,7 +25,6 @@ const employeeSlice = createSlice({
   name: "employee",
   initialState,
   reducers: {
-    /* ================= LIST ================= */
     fetchEmployeesRequest: (state) => {
       state.loading = true;
     },
@@ -38,7 +37,6 @@ const employeeSlice = createSlice({
       state.error = action.payload;
     },
 
-    /* ================= DETAIL ================= */
     fetchEmployeeDetailRequest: (state) => {
       state.loading = true;
     },
@@ -57,7 +55,6 @@ const employeeSlice = createSlice({
       state.error = action.payload;
     },
 
-    /* ================= SAVE FULL ================= */
     saveEmployeeFullRequest: (state) => {
       state.loading = true;
       state.isSaveSuccess = false;
@@ -70,10 +67,9 @@ const employeeSlice = createSlice({
     saveEmployeeFullFailure: (state, action) => {
       state.loading = false;
       state.error = action.payload;
-      console.log("decheck222",action.payload)
+      console.log("decheck222", action.payload);
     },
-     
-    /* ================= DELETE ================= */
+
     deleteEmployeeRequest: (state) => {
       state.loading = true;
     },
@@ -82,7 +78,6 @@ const employeeSlice = createSlice({
       state.list = state.list.filter((e) => e.id !== action.payload);
     },
 
-    /* ================= REGISTER ================= */
     registerEmployeeRequest: (state) => {
       state.loading = true;
     },
@@ -91,7 +86,6 @@ const employeeSlice = createSlice({
       const emp = state.list.find((e) => e.id === action.payload);
       if (emp) emp.status = EmployeeStatus.CHO_XU_LY;
     },
-    // New Registration Check Actions
     checkRegistrationRequest: (state, action) => {
       state.regCheck.loading = true;
       state.regCheck.message = "";
@@ -104,22 +98,24 @@ const employeeSlice = createSlice({
     checkRegistrationFailure: (state, action) => {
       state.regCheck.loading = false;
       state.regCheck.canRegister = false;
-      state.regCheck.message = action.payload; // Payload is the error message from server
+      state.regCheck.message = action.payload;
     },
-      // New Registration Flow Actions
-    fetchExistingRegistrationRequest: (state) => { state.registration.loading = true; },
+    fetchExistingRegistrationRequest: (state) => {
+      state.registration.loading = true;
+    },
     fetchExistingRegistrationSuccess: (state, action) => {
       state.registration.loading = false;
       state.registration.currentFormId = action.payload?.id || null;
       state.registration.currentFormData = action.payload || null;
     },
-    updateRegistrationRequest: (state) => { state.registration.loading = true; },
+    updateRegistrationRequest: (state) => {
+      state.registration.loading = true;
+    },
     updateRegistrationSuccess: (state, action) => {
       state.registration.loading = false;
       state.registration.success = true;
     },
 
-    // New Registration Flow Actions
     createRegistrationRequest: (state) => {
       state.registration.loading = true;
     },

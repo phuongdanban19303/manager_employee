@@ -16,7 +16,6 @@ export const STATUS_COLORS = {
   [EmployeeStatus.DA_DUYET]: 'bg-[#28a745] text-white',
 };
 
-// Màu sắc cho các nút lọc trạng thái trên header
 export const FILTER_COLORS = {
   [EmployeeStatus.LUU_MOI]: 'bg-[#28a745]',
   [EmployeeStatus.CHO_XU_LY]: 'bg-[#ffc107]',

@@ -1,17 +1,25 @@
 import { useEffect, useState } from "react";
+import {
+  FaCircleNotch,
+  FaEye,
+  FaPencilAlt,
+  FaPlus,
+  FaPowerOff,
+  FaSearch,
+  FaTrash,
+} from "react-icons/fa";
 import { useDispatch, useSelector } from "react-redux";
-import EmployeeModal from "./EmployeeModal";
-import { EmployeeStatus, STATUS_COLORS } from "../../utils/contstants";
-import { FaPlus, FaSearch, FaPencilAlt, FaTrash, FaEye, FaPowerOff, FaCircleNotch } from 'react-icons/fa';
 import {
   deleteEmployeeRequest,
   fetchEmployeeDetailRequest,
   fetchEmployeesRequest,
 } from "../../store/scile/employeeSlice";
+import { EmployeeStatus, STATUS_COLORS } from "../../utils/contstants";
 import TerminationModal from "../From/TerminationModal";
+import EmployeeModal from "./EmployeeModal";
 
 const EmployeeManagement = () => {
- const dispatch = useDispatch();
+  const dispatch = useDispatch();
   const { list, loading } = useSelector((state) => state.employee);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedEmployeeID, setSelectedEmployeeID] = useState(null);
@@ -52,10 +60,15 @@ const EmployeeManagement = () => {
     setTerminationTarget(emp);
   };
 
-  // Logic phân quyền nút bấm dựa trên trạng thái
-  const canEdit = (status) => [EmployeeStatus.DRAFT, EmployeeStatus.UPDATE, EmployeeStatus.REJECTED].includes(status);
+  const canEdit = (status) =>
+    [
+      EmployeeStatus.DRAFT,
+      EmployeeStatus.UPDATE,
+      EmployeeStatus.REJECTED,
+    ].includes(status);
   const canDelete = (status) => status === EmployeeStatus.DRAFT;
-  const canTerminate = (status) => status === EmployeeStatus.APPROVED || status === 'APPROVED';
+  const canTerminate = (status) =>
+    status === EmployeeStatus.APPROVED || status === "APPROVED";
 
   return (
     <div className="max-w-[1600px] mx-auto animate-fadeIn pb-10">
@@ -128,13 +141,27 @@ const EmployeeManagement = () => {
           <table className="w-full text-left border-collapse">
             <thead>
               <tr className="bg-[#f8f9fa]">
-                <th className="px-6 py-4 text-[11px] font-bold text-gray-500 uppercase tracking-wider">STT</th>
-                <th className="px-6 py-4 text-[11px] font-bold text-gray-500 uppercase tracking-wider">Mã NV</th>
-                <th className="px-6 py-4 text-[11px] font-bold text-gray-500 uppercase tracking-wider">Họ tên</th>
-                <th className="px-6 py-4 text-[11px] font-bold text-gray-500 uppercase tracking-wider">Phòng ban</th>
-                <th className="px-6 py-4 text-[11px] font-bold text-gray-500 uppercase tracking-wider">Ngày tạo</th>
-                <th className="px-6 py-4 text-[11px] font-bold text-gray-500 uppercase tracking-wider text-center">Trạng thái</th>
-                <th className="px-6 py-4 text-[11px] font-bold text-gray-500 uppercase tracking-wider text-right">Thao tác</th>
+                <th className="px-6 py-4 text-[11px] font-bold text-gray-500 uppercase tracking-wider">
+                  STT
+                </th>
+                <th className="px-6 py-4 text-[11px] font-bold text-gray-500 uppercase tracking-wider">
+                  Mã NV
+                </th>
+                <th className="px-6 py-4 text-[11px] font-bold text-gray-500 uppercase tracking-wider">
+                  Họ tên
+                </th>
+                <th className="px-6 py-4 text-[11px] font-bold text-gray-500 uppercase tracking-wider">
+                  Phòng ban
+                </th>
+                <th className="px-6 py-4 text-[11px] font-bold text-gray-500 uppercase tracking-wider">
+                  Ngày tạo
+                </th>
+                <th className="px-6 py-4 text-[11px] font-bold text-gray-500 uppercase tracking-wider text-center">
+                  Trạng thái
+                </th>
+                <th className="px-6 py-4 text-[11px] font-bold text-gray-500 uppercase tracking-wider text-right">
+                  Thao tác
+                </th>
               </tr>
             </thead>
             <tbody className="divide-y divide-gray-100">
@@ -147,51 +174,85 @@ const EmployeeManagement = () => {
                   </td>
                 </tr>
               ) : list?.length > 0 ? (
-                list.filter(e => e.status !== 'TERMINATED').map((emp, index) => (
-                  <tr key={emp.id} className="hover:bg-blue-50/30 transition-colors group">
-                    <td className="px-6 py-4 text-sm text-gray-500">{index + 1}</td>
-                    <td className="px-6 py-4 text-sm text-gray-600 font-medium tracking-tight">
-                      {emp.employeeCode || emp.code}
-                    </td>
-                    <td className="px-6 py-4 text-sm text-slate-800 font-semibold">
-                      {emp.fullName || emp.name}
-                    </td>
-                    <td className="px-6 py-4 text-sm text-gray-500">{emp.team || "Team VR"}</td>
-                    <td className="px-6 py-4 text-sm text-gray-400">
-                      {new Date(emp.createdAt || Date.now()).toLocaleDateString('vi-VN')}
-                    </td>
-                    <td className="px-6 py-4 text-center">
-                      <span className={`px-4 py-1.5 rounded-full text-[10px] font-extrabold inline-block min-w-[100px] border shadow-sm ${STATUS_COLORS[emp.status] || "bg-gray-100 text-gray-600"}`}>
-                        {emp.status}
-                      </span>
-                    </td>
-                    <td className="px-6 py-4">
-                      <div className="flex items-center justify-end gap-3 opacity-80 group-hover:opacity-100">
-                        {canTerminate(emp.status) && (
-                          <button onClick={() => handleOpenTermination(emp)} className="text-rose-500 hover:text-rose-700 p-1" title="Kết thúc hồ sơ">
-                            <FaPowerOff className="text-lg" />
+                list
+                  .filter((e) => e.status !== "TERMINATED")
+                  .map((emp, index) => (
+                    <tr
+                      key={emp.id}
+                      className="hover:bg-blue-50/30 transition-colors group"
+                    >
+                      <td className="px-6 py-4 text-sm text-gray-500">
+                        {index + 1}
+                      </td>
+                      <td className="px-6 py-4 text-sm text-gray-600 font-medium tracking-tight">
+                        {emp.employeeCode || emp.code}
+                      </td>
+                      <td className="px-6 py-4 text-sm text-slate-800 font-semibold">
+                        {emp.fullName || emp.name}
+                      </td>
+                      <td className="px-6 py-4 text-sm text-gray-500">
+                        {emp.team || "Team VR"}
+                      </td>
+                      <td className="px-6 py-4 text-sm text-gray-400">
+                        {new Date(
+                          emp.createdAt || Date.now(),
+                        ).toLocaleDateString("vi-VN")}
+                      </td>
+                      <td className="px-6 py-4 text-center">
+                        <span
+                          className={`px-4 py-1.5 rounded-full text-[10px] font-extrabold inline-block min-w-[100px] border shadow-sm ${STATUS_COLORS[emp.status] || "bg-gray-100 text-gray-600"}`}
+                        >
+                          {emp.status}
+                        </span>
+                      </td>
+                      <td className="px-6 py-4">
+                        <div className="flex items-center justify-end gap-3 opacity-80 group-hover:opacity-100">
+                          {canTerminate(emp.status) && (
+                            <button
+                              onClick={() => handleOpenTermination(emp)}
+                              className="text-rose-500 hover:text-rose-700 p-1"
+                              title="Kết thúc hồ sơ"
+                            >
+                              <FaPowerOff className="text-lg" />
+                            </button>
+                          )}
+                          {canEdit(emp.status) && (
+                            <button
+                              onClick={() => handleEdit(emp.id)}
+                              className="text-blue-500 hover:text-blue-700 p-1"
+                              title="Chỉnh sửa"
+                            >
+                              <FaPencilAlt className="text-lg" />
+                            </button>
+                          )}
+                          {canDelete(emp.status) && (
+                            <button
+                              onClick={() => handleDelete(emp.id)}
+                              className="text-red-500 hover:text-red-700 p-1"
+                              title="Xóa"
+                            >
+                              <FaTrash className="text-lg" />
+                            </button>
+                          )}
+                          <button
+                            onClick={() => handleView(emp.id)}
+                            className="text-slate-400 hover:text-slate-600 p-1"
+                            title="Xem chi tiết"
+                          >
+                            <FaEye className="text-lg" />
                           </button>
-                        )}
-                        {canEdit(emp.status) && (
-                          <button onClick={() => handleEdit(emp.id)} className="text-blue-500 hover:text-blue-700 p-1" title="Chỉnh sửa">
-                            <FaPencilAlt className="text-lg" />
-                          </button>
-                        )}
-                        {canDelete(emp.status) && (
-                          <button onClick={() => handleDelete(emp.id)} className="text-red-500 hover:text-red-700 p-1" title="Xóa">
-                            <FaTrash className="text-lg" />
-                          </button>
-                        )}
-                        <button onClick={() => handleView(emp.id)} className="text-slate-400 hover:text-slate-600 p-1" title="Xem chi tiết">
-                          <FaEye className="text-lg" />
-                        </button>
-                      </div>
-                    </td>
-                  </tr>
-                ))
+                        </div>
+                      </td>
+                    </tr>
+                  ))
               ) : (
                 <tr>
-                  <td colSpan="7" className="px-6 py-20 text-center text-gray-300 italic">Dữ liệu trống</td>
+                  <td
+                    colSpan="7"
+                    className="px-6 py-20 text-center text-gray-300 italic"
+                  >
+                    Dữ liệu trống
+                  </td>
                 </tr>
               )}
             </tbody>
@@ -209,8 +270,8 @@ const EmployeeManagement = () => {
 
       {terminationTarget && (
         <TerminationModal
-            employee={terminationTarget} 
-            onClose={() => setTerminationTarget(null)} 
+          employee={terminationTarget}
+          onClose={() => setTerminationTarget(null)}
         />
       )}
     </div>

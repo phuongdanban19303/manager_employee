@@ -26,7 +26,6 @@ const terminationSlice = createSlice({
       state.managers = action.payload;
     },
 
-    // Luồng gộp: Create + Submit
     submitTerminationFlowRequest: (state) => { state.submitting = true; state.success = false; },
     submitTerminationFlowSuccess: (state) => {
       state.submitting = false;
