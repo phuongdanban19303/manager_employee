@@ -5,6 +5,7 @@ import Login from "./pages/Login/Login";
 import { useSelector } from "react-redux";
 import ApprovalManagement from "./pages/From/AppManagement";
 import EventManagement from "./pages/From/EventManagement";
+import Guide from "./pages/Login/Guide";
 
 // Tạo Layout riêng để bao bọc các trang sau khi đăng nhập
 const ProtectedLayout = () => {
@@ -37,6 +38,7 @@ function App() {
           path="/login" 
           element={!token ? <Login /> : <Navigate to="/management/employees" replace />} 
         />
+            <Route path="/guide" element={<Guide />} />
 
         {/* Route Protected (Phải đăng nhập mới vào được) */}
         <Route element={<ProtectedLayout />}>
