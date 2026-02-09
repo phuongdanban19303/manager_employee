@@ -83,8 +83,7 @@ const RegistrationModal = ({ onClose }) => {
 
   const docTypes = [
     { id: 'application', label: 'Đơn đăng ký nhân viên', icon: <FaFileSignature /> },
-    { id: 'cv', label: 'Bản tóm tắt (CV)', icon: <FaFileAlt />, disabled: true },
-    { id: 'commitment', label: 'Cam kết bảo mật', icon: <FaFileAlt />, disabled: true },
+    
   ];
 
   return (
