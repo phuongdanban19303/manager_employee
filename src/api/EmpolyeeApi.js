@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const BASE_URL = 'https://manageremployeebackend-production.up.railway.app';
+const BASE_URL = 'https://manager-employee-backend.onrender.com';
 
 const apiClient = axios.create({
   baseURL: BASE_URL,
