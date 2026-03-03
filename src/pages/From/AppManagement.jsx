@@ -47,7 +47,7 @@ const ApprovalManagement = () => {
       {/* Header */}
       <div className="mb-10">
         <h1 className="text-4xl font-black text-slate-800 tracking-tight">
-          Hộp thư phê duyệt
+          Yêu cầu phê duyệt
         </h1>
         <div className="flex items-center gap-2 mt-2">
           <span className="w-8 h-1 bg-blue-600 rounded-full"></span>

@@ -22,7 +22,6 @@ const Navbar = () => {
   };
 
   const menuItems = [
-    { icon: <FaHome />, path: "/home", label: "Trang chủ" },
     { icon: <FaUsers />, path: "/management/employees", label: "Nhân sự" },
     {
       icon: <FaFileSignature />,
